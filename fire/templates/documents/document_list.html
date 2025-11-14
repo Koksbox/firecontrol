@@ -1,0 +1,28 @@
+<!-- templates/documents/document_list.html -->
+{% extends 'base.html' %}
+{% block title %}Документы{% endblock %}
+
+{% block content %}
+<h2>Документы</h2>
+<a href="{% url 'documents:create' %}" class="btn btn-primary">Загрузить документ</a>
+
+<div class="card-list">
+  {% for doc in documents %}
+    <div class="card">
+      <h3>{{ doc.title }}</h3>
+      <p><strong>Тип:</strong> {{ doc.get_doc_type_display }}</p>
+      <p><strong>Объект:</strong> <a href="{{ doc.fire_object.get_absolute_url }}">{{ doc.fire_object.name }}</a></p>
+      <p><strong>Загружен:</strong> {{ doc.uploaded_at|date:"d.m.Y" }} ({{ doc.uploaded_by.get_full_name|default:doc.uploaded_by.username }})</p>
+      {% if doc.valid_until %}
+        <p><strong>Действителен до:</strong> {{ doc.valid_until|date:"d.m.Y" }}
+          {% if doc.valid_until < now %}<span class="badge badge-danger">Просрочен</span>{% endif %}
+        </p>
+      {% endif %}
+      <a href="{{ doc.file.url }}" target="_blank">Скачать</a> |
+      <a href="{% url 'documents:detail' doc.pk %}">Подробнее</a>
+    </div>
+  {% empty %}
+    <p>Нет документов.</p>
+  {% endfor %}
+</div>
+{% endblock %}

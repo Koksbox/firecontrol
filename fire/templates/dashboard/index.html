@@ -1,0 +1,81 @@
+<!-- templates/dashboard/index.html -->
+{% extends 'base.html' %}
+{% block title %}Рабочая панель{% endblock %}
+
+{% block content %}
+<h1>Рабочая панель</h1>
+
+<!-- Статистика -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <h3>{{ total_objects }}</h3>
+    <p>Всего объектов</p>
+  </div>
+  <div class="stat-card">
+    <h3>{{ critical_extinguishers.count }}</h3>
+    <p>Огнетушителей требуют внимания</p>
+  </div>
+  <div class="stat-card">
+    <h3>{{ expired_documents.count }}</h3>
+    <p>Просроченных документов</p>
+  </div>
+</div>
+
+<!-- Быстрые действия -->
+<div class="actions-bar">
+  <a href="{% url 'inspections:create' %}" class="btn btn-primary">Новая проверка</a>
+  <a href="{% url 'objects:create' %}" class="btn btn-secondary">Добавить объект</a>
+  <a href="{% url 'fire_safety:create' %}" class="btn btn-secondary">Добавить огнетушитель</a>
+</div>
+
+<!-- Критические огнетушители -->
+{% if critical_extinguishers %}
+<h2>⚠️ Требуют внимания: огнетушители</h2>
+<div class="card-list">
+  {% for ext in critical_extinguishers %}
+    <div class="card card-warning">
+      <h4>Огнетушитель №{{ ext.inventory_number }}</h4>
+      <p><strong>Объект:</strong> <a href="{{ ext.fire_object.get_absolute_url }}">{{ ext.fire_object.name }}</a></p>
+      <p><strong>След. проверка:</strong> {{ ext.next_check_date|date:"d.m.Y" }}</p>
+      <p><strong>Место:</strong> {{ ext.location }}</p>
+      <a href="{% url 'fire_safety:detail' ext.pk %}">Перейти</a>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Просроченные документы -->
+{% if expired_documents %}
+<h2>⚠️ Просроченные документы</h2>
+<div class="card-list">
+  {% for doc in expired_documents %}
+    <div class="card card-danger">
+      <h4>{{ doc.title }}</h4>
+      <p><strong>Объект:</strong> <a href="{{ doc.fire_object.get_absolute_url }}">{{ doc.fire_object.name }}</a></p>
+      <p><strong>Истёк:</strong> {{ doc.valid_until|date:"d.m.Y" }}</p>
+      <a href="{% url 'documents:detail' doc.pk %}">Обновить</a>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Последние проверки -->
+{% if recent_inspections %}
+<h2>Последние проверки</h2>
+<ul class="recent-list">
+  {% for insp in recent_inspections %}
+    <li>
+      <strong>{{ insp.fire_object.name }}</strong> —
+      {{ insp.date|date:"d.m.Y" }} |
+      {% if insp.status == 'completed' %}
+        <span class="badge badge-success">Завершён</span>
+      {% else %}
+        <span class="badge badge-warning">Черновик</span>
+      {% endif %}
+      <a href="{% url 'inspections:detail' insp.pk %}">Подробнее</a>
+    </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

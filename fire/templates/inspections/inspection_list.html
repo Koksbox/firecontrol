@@ -1,0 +1,22 @@
+<!-- templates/inspections/inspection_list.html -->
+{% extends 'base.html' %}
+{% block title %}Проверки{% endblock %}
+
+{% block content %}
+<h2>Проверки</h2>
+<a href="{% url 'inspections:create' %}" class="btn btn-primary">Новая проверка</a>
+
+<div class="card-list">
+  {% for insp in inspections %}
+    <div class="card">
+      <h3>{{ insp.fire_object.name }}</h3>
+      <p><strong>Дата:</strong> {{ insp.date|date:"d.m.Y" }}</p>
+      <p><strong>Инспектор:</strong> {{ insp.inspector.get_full_name|default:insp.inspector.username }}</p>
+      <p><strong>Статус:</strong> {{ insp.get_status_display }}</p>
+      <a href="{% url 'inspections:detail' insp.pk %}">Подробнее</a>
+    </div>
+  {% empty %}
+    <p>Нет проверок.</p>
+  {% endfor %}
+</div>
+{% endblock %}

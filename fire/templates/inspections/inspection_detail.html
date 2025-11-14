@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Проверка {{ inspection.fire_object.name }}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h2>Проверка: {{ inspection.fire_object.name }}</h2>
+  <p><strong>Дата:</strong> {{ inspection.date|date:"d.m.Y" }}</p>
+  <p><strong>Инспектор:</strong> {{ inspection.inspector.get_full_name|default:inspection.inspector.username }}</p>
+  <p><strong>Статус:</strong> {{ inspection.get_status_display }}</p>
+  <p><strong>Замечания:</strong><br>{{ inspection.notes|linebreaks }}</p>
+
+  {% if inspection.status == 'draft' %}
+    <a href="{% url 'inspections:complete' inspection.pk %}" class="btn btn-success">Завершить проверку</a>
+  {% endif %}
+
+  <hr>
+
+  <h3>Фото нарушений</h3>
+  {% if photos %}
+    <div class="photo-grid">
+      {% for photo in photos %}
+        <div class="photo-item">
+          <img src="{{ photo.photo.url }}" alt="{{ photo.caption }}">
+          <p>{{ photo.caption|default:"Без описания" }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>Нет фотографий.</p>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" style="margin-top: 20px;">
+    {% csrf_token %}
+    <h4>Добавить фото</h4>
+    {% for field in photo_form %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+      </div>
+    {% endfor %}
+    <button type="submit" name="add_photo" class="btn btn-secondary">Добавить фото</button>
+  </form>
+
+  <div class="card-actions">
+    <a href="{% url 'inspections:list' %}">← Назад к списку</a>
+  </div>
+</div>
+{% endblock %}

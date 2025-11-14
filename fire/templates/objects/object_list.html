@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Объекты надзора{% endblock %}
+
+{% block content %}
+<h2>Объекты надзора</h2>
+
+<!-- Форма поиска и фильтрации -->
+<form method="get" class="filter-form">
+  <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Поиск по названию или адресу...">
+  
+  <select name="type">
+    <option value="">Все типы</option>
+    {% for t in object_types %}
+      <option value="{{ t.id }}" {% if t.id|slugify == type_filter|slugify %}selected{% endif %}>{{ t.name }}</option>
+    {% endfor %}
+  </select>
+
+  <select name="class">
+    <option value="">Все классы</option>
+    {% for code, name in fire_classes %}
+      <option value="{{ code }}" {% if code == class_filter %}selected{% endif %}>{{ name }}</option>
+    {% endfor %}
+  </select>
+
+  <button type="submit" class="btn btn-secondary">Фильтровать</button>
+  <a href="{% url 'objects:create' %}" class="btn btn-primary">Добавить объект</a>
+</form>
+
+<!-- Список -->
+<div class="card-list">
+  {% for obj in objects %}
+    <div class="card">
+      <h3>{{ obj.name }}</h3>
+      <p><strong>Адрес:</strong> {{ obj.actual_address }}</p>
+      <p><strong>Тип:</strong> {{ obj.object_type }}</p>
+      <p><strong>Класс:</strong> {{ obj.get_fire_class_display }}</p>
+      <a href="{{ obj.get_absolute_url }}">Подробнее</a>
+    </div>
+  {% empty %}
+    <p>Нет объектов.</p>
+  {% endfor %}
+</div>
+{% endblock %}

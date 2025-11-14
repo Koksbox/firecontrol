@@ -1,0 +1,47 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Пожарный контроль: Стерлитамак{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+  <div class="app-wrapper">
+    <div class="app-layout">
+        <aside class="sidebar">
+          <h2>Пожарный контроль</h2>
+          <nav>
+            <ul>
+              <li><a href="{% url 'dashboard:index' %}" {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %}>Главная</a></li>
+              <li><a href="{% url 'objects:list' %}" {% if 'objects' in request.resolver_match.app_names %}class="active"{% endif %}>Объекты</a></li>
+              <li><a href="{% url 'fire_safety:list' %}" {% if 'fire_safety' in request.resolver_match.app_names %}class="active"{% endif %}>Средства</a></li>
+              <li><a href="{% url 'documents:list' %}" {% if 'documents' in request.resolver_match.app_names %}class="active"{% endif %}>Документы</a></li>
+              <li><a href="{% url 'inspections:list' %}" {% if 'inspections' in request.resolver_match.app_names %}class="active"{% endif %}>Проверки</a></li>
+              {% if user.role == 'admin' %}
+                <li><a href="{% url 'admin:index' %}" target="_blank">Админка</a></li>
+              {% endif %}
+            </ul>
+          </nav>
+          <div class="user-info">
+            <span>{{ user.get_full_name|default:user.username }}</span>
+            <a href="{% url 'logout' %}">Выйти</a>
+          </div>
+        </aside>
+      <main class="main-content">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <p class="footer-text">
+          Team: <span class="footer-highlight">LogicRoom</span>
+        </p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!-- templates/fire_safety/extinguisher_detail.html -->
+{% extends 'base.html' %}
+{% block title %}Огнетушитель №{{ extinguisher.inventory_number }}{% endblock %}
+
+{% block content %}
+<h2>Огнетушитель №{{ extinguisher.inventory_number }}</h2>
+<p><strong>Тип:</strong> {{ extinguisher.get_type_display }}</p>
+<p><strong>Место установки:</strong> {{ extinguisher.location }}</p>
+<p><strong>Объект:</strong> <a href="{{ extinguisher.fire_object.get_absolute_url }}">{{ extinguisher.fire_object.name }}</a></p>
+<p><strong>Последняя заправка:</strong> {{ extinguisher.last_refill_date }}</p>
+<p><strong>Следующая проверка:</strong> {{ extinguisher.next_check_date }}</p>
+<p><strong>Статус:</strong> {% if extinguisher.is_active %}Активен{% else %}Неактивен{% endif %}</p>
+
+<a href="{% url 'fire_safety:edit' extinguisher.pk %}">Редактировать</a>
+{% if extinguisher.is_active %}
+  <a href="{% url 'fire_safety:deactivate' extinguisher.pk %}" onclick="return confirm('Точно вывести из эксплуатации?')">Вывести из эксплуатации</a>
+{% endif %}
+{% endblock %}

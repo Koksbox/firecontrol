@@ -1,0 +1,308 @@
+<!-- templates/admin/base.html -->
+{% extends "admin/base.html" %}
+
+{% block extrastyle %}
+<style>
+:root {
+  --color-bg: #ffffff;
+  --color-text: #1a1a1a;
+  --color-primary: #1e40af;
+  --color-primary-light: #3b82f6;
+  --color-primary-dark: #1e3a8a;
+  --color-accent: #60a5fa;
+  --color-border: #e5e7eb;
+  --color-sidebar: #f9fafb;
+  --shadow: 0 2px 8px rgba(0,0,0,0.05);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* Шапка — градиент */
+#header {
+  background: linear-gradient(90deg, var(--color-primary-dark), var(--color-primary));
+  border-bottom: none;
+  padding: 12px 20px;
+  box-shadow: var(--shadow);
+}
+#header h1 {
+  color: white;
+  font-weight: 600;
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+}
+#user-tools {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+}
+#user-tools a {
+  color: white;
+  text-decoration: none;
+  margin-left: 8px;
+}
+#user-tools a:hover {
+  text-decoration: underline;
+  color: var(--color-accent);
+}
+
+/* Левая панель */
+#content-related {
+  background-color: var(--color-sidebar);
+  border-right: 1px solid var(--color-border);
+  padding: 20px;
+}
+
+#content-related .module {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s;
+}
+
+#content-related .module:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+#content-related .module h2 {
+  margin-top: 0;
+  font-size: 1rem;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#content-related .module h2 i {
+  color: var(--color-accent);
+  font-size: 1.1rem;
+}
+
+/* Ссылки в левой панели */
+#content-related a {
+  color: var(--color-primary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+#content-related a:hover {
+  text-decoration: none;
+  color: var(--color-accent);
+}
+
+#content-related a i.fa-plus {
+  color: var(--color-accent);
+}
+
+#content-related a i.fa-pen {
+  color: var(--color-primary);
+}
+
+/* Основной контент */
+#content {
+  margin-left: 25%;
+  padding: 20px;
+  background: white;
+  min-height: 100vh;
+}
+
+/* Модуль списка объектов */
+.module {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s;
+}
+.module:hover {
+  box-shadow: var(--shadow-hover);
+}
+.module h2 {
+  font-size: 1.1rem;
+  margin-top: 0;
+  color: var(--color-primary);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.module h2 i {
+  color: var(--color-accent);
+  font-size: 1.1rem;
+}
+
+/* Таблица */
+.change-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+}
+.change-list th,
+.change-list td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color 0.2s;
+}
+.change-list th {
+  background: var(--color-sidebar);
+  font-weight: 600;
+  color: var(--color-text);
+}
+.change-list tr:hover td {
+  background: #f9fafb;
+}
+
+/* Кнопки */
+.addlink, .changelink {
+  color: var(--color-primary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+.addlink:hover, .changelink:hover {
+  text-decoration: none;
+  color: var(--color-accent);
+}
+.addlink i, .changelink i {
+  font-size: 0.9rem;
+}
+
+/* Формы */
+.form-row {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color 0.2s;
+}
+.form-row:hover {
+  background: #f9fafb;
+}
+.form-row label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+input[type="url"],
+select,
+textarea {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.2s;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.1);
+}
+
+/* Кнопки формы */
+.submit-row {
+  background: white;
+  border-top: 1px solid var(--color-border);
+  padding: 16px;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.submit-row input[type="submit"] {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.submit-row input[type="submit"]:hover {
+  background: var(--color-primary-light);
+}
+.submit-row input[type="submit"] i {
+  font-size: 0.9rem;
+}
+
+/* Сообщения */
+ul.messagelist li {
+  background: #f0f9ff;
+  border-left: 4px solid var(--color-primary);
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+ul.messagelist li.error {
+  background: #fef2f2;
+  border-left-color: #ef4444;
+}
+ul.messagelist li.warning {
+  background: #fffbeb;
+  border-left-color: #f59e0b;
+}
+ul.messagelist li.success {
+  background: #ecfdf5;
+  border-left-color: #10b981;
+}
+
+/* Иконки кнопок */
+.addlink i.fa-plus {
+  color: var(--color-accent);
+}
+.changelink i.fa-pen {
+  color: var(--color-primary);
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+  #content {
+    margin-left: 0;
+  }
+  .change-list th,
+  .change-list td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  .form-row {
+    padding: 8px 0;
+  }
+  .submit-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+</style>
+{% endblock %}

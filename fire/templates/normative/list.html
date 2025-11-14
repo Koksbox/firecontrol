@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Нормативные документы{% endblock %}
+
+{% block content %}
+<h2>Нормативные документы</h2>
+<p>Актуальные правовые акты в области пожарной безопасности.</p>
+
+<div class="card-list">
+  {% for doc in documents %}
+    <div class="card">
+      <h3>{{ doc.title }}</h3>
+      {% if doc.doc_number %}<p><strong>Номер:</strong> {{ doc.doc_number }}</p>{% endif %}
+      {% if doc.issue_date %}<p><strong>Дата:</strong> {{ doc.issue_date|date:"d.m.Y" }}</p>{% endif %}
+      {% if doc.file %}
+        <a href="{{ doc.file.url }}" target="_blank" class="btn btn-secondary">Скачать PDF</a>
+      {% elif doc.url %}
+        <a href="{{ doc.url }}" target="_blank" class="btn btn-secondary">Открыть</a>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p>Нет документов.</p>
+  {% endfor %}
+</div>
+{% endblock %}

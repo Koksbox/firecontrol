@@ -1,0 +1,467 @@
+/* Цвета и переменные */
+:root {
+  --color-bg: #ffffff;
+  --color-text: #1a1a1a;
+  --color-primary: #1e40af;      /* насыщенный синий */
+  --color-primary-light: #3b82f6;
+  --color-border: #e5e7eb;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Глобальные стили */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Боковая панель */
+.sidebar {
+  width: 25%;
+  background-color: #f9fafb;
+  border-right: 1px solid var(--color-border);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h2 {
+  font-size: 1.4rem;
+  margin-bottom: 30px;
+  color: var(--color-primary);
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar nav li {
+  margin-bottom: 12px;
+}
+
+.sidebar nav a {
+  text-decoration: none;
+  color: var(--color-text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: block;
+  transition: background-color 0.2s;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.user-info {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.9rem;
+}
+
+.user-info a {
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-left: 8px;
+}
+
+/* Основной контент */
+.main-content {
+  flex: 1;
+  padding: 24px;
+}
+
+/* Кнопки */
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+.btn-primary:hover {
+  background-color: var(--color-primary-light);
+}
+
+.btn-secondary {
+  background-color: #e5e7eb;
+  color: var(--color-text);
+}
+.btn-secondary:hover {
+  background-color: #d1d5db;
+}
+
+.btn-success {
+  background-color: var(--color-success);
+  color: white;
+}
+.btn-danger {
+  background-color: var(--color-danger);
+  color: white;
+}
+
+/* Формы */
+.form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.form-group {
+  margin-bottom: 16px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.2);
+}
+.form-group .error {
+  color: var(--color-danger);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* Карточки */
+.card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+.card-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* Статистика */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.stat-card h3 {
+  font-size: 2rem;
+  margin: 0 0 8px;
+  color: var(--color-primary);
+}
+
+/* Быстрые действия */
+.actions-bar {
+  margin: 24px 0;
+}
+.actions-bar .btn {
+  margin-right: 12px;
+  margin-bottom: 12px;
+}
+
+/* Фото */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.photo-item {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+}
+.photo-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+.photo-item p {
+  padding: 8px;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Карты */
+.map-container {
+  margin: 16px 0;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Форма входа */
+.auth-form-card {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  background: white;
+}
+
+/* Списки */
+.recent-list {
+  list-style: none;
+  padding: 0;
+}
+.recent-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: white;
+}
+.badge-success {
+  background-color: var(--color-success);
+}
+.badge-warning {
+  background-color: var(--color-warning);
+}
+.badge-danger {
+  background-color: var(--color-danger);
+}
+
+/* Фильтрация */
+.filter-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+.filter-form input,
+.filter-form select,
+.filter-form button {
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 16px;
+}
+.filter-form button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.filter-form button:hover {
+  background-color: var(--color-primary-light);
+}
+
+/* === НЕОНОВЫЙ ФУТЕР === */
+.footer-file_list {
+  margin-top: auto; /* Ключевая строка — прижимает футер вниз */
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(10, 10, 10, 0.6);
+  border-top: 1px solid red;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-file_list::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(255, 30, 30, 0.08), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.footer-content-file_list {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.footer-text-file_list {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.footer-highlight-file_list {
+  color: #ff4d4d;
+  text-shadow:
+    0 0 6px #ff0000,
+    0 0 12px #ff0000,
+    0 0 18px #ff333380;
+  font-weight: 700;
+  animation: footer-neon-pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes footer-neon-pulse {
+  from {
+    text-shadow:
+      0 0 4px #ff4d4d,
+      0 0 8px #ff3333,
+      0 0 12px #ff000040;
+  }
+  to {
+    text-shadow:
+      0 0 8px #ff0000,
+      0 0 16px #ff0000,
+      0 0 24px #ff333380;
+  }
+}
+
+.auth-form-card {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  background: white;
+  text-align: center;
+}
+
+/* Обёртка для фиксированного футера */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.app-layout {
+  flex: 1;
+  display: flex;
+}
+
+/* Футер */
+.footer {
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  padding: 16px 24px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-text {
+  margin: 0;
+}
+.footer-highlight {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+
+/* Адаптивность */
+@media (max-width: 576px) {
+  .footer-file_list {
+    padding: 1rem 0.8rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+  .footer {
+    padding: 12px 16px;
+  }
+
+  .app-layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .main-content {
+    padding: 16px;
+  }
+  .form {
+    max-width: 100%;
+  }
+  .auth-form-card {
+    margin: 20px 16px;
+    padding: 16px;
+  }
+  .photo-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+  .actions-bar .btn,
+  .filter-form button,
+  .filter-form input,
+  .filter-form select {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+}

@@ -1,0 +1,54 @@
+<!-- templates/admin/login.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вход в админку | Пожарный контроль</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <style>
+    /* Скрыть элементы, специфичные для основного base.html */
+    .sidebar, .user-info, footer {
+      display: none !important;
+    }
+    .main-content {
+      margin-left: 0 !important;
+      padding: 0 !important;
+    }
+    .app-layout {
+      display: block !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <main class="main-content">
+      <div class="auth-form-card">
+        <h2>Вход в админку</h2>
+        <form method="post" class="form">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="form-group">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+              {% if field.errors %}
+                <div class="error">{{ field.errors }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Войти</button>
+          </div>
+          {% if user.is_authenticated %}
+            <p class="text-center" style="margin-top: 16px;">
+              Вы уже вошли как {{ user.username }}.
+              <a href="{% url 'admin:index' %}" style="color: var(--color-primary);">Перейти в админку</a>
+            </p>
+          {% endif %}
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

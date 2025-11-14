@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h2>{{ object.name }}</h2>
+  <p><strong>Юридический адрес:</strong> {{ object.legal_address }}</p>
+  <p><strong>Фактический адрес:</strong> {{ object.actual_address }}</p>
+  <p><strong>Тип объекта:</strong> {{ object.object_type }}</p>
+  <p><strong>Класс Ф:</strong> {{ object.get_fire_class_display }}</p>
+
+  {% if object.responsibles.all %}
+    <h3>Ответственные лица</h3>
+    <ul>
+      {% for resp in object.responsibles.all %}
+        <li>
+          <strong>{{ resp.name }}</strong> — {{ resp.position }}<br>
+          📞 {% if resp.phone_mobile %}{{ resp.phone_mobile }}{% else %}{{ resp.phone_work }}{% endif %}
+          {% if resp.email %} | 📧 {{ resp.email }}{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Нет ответственных лиц.</p>
+  {% endif %}
+
+  <h3>Местоположение на карте</h3>
+  <div class="map-container">
+    <iframe
+      src="https://yandex.ru/maps/?text={{ object.actual_address|urlencode }}"
+      width="100%"
+      height="300"
+      frameborder="0">
+    </iframe>
+  </div>
+
+  <div class="card-actions">
+    <a href="{% url 'objects:edit' object.pk %}" class="btn btn-secondary">Редактировать</a>
+    <a href="{% url 'objects:archive' object.pk %}" class="btn btn-danger" onclick="return confirm('Точно вывести из надзора?')">Архивировать</a>
+  </div>
+</div>
+{% endblock %}

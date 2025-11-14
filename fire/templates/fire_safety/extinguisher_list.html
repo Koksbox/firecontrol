@@ -1,0 +1,22 @@
+<!-- templates/fire_safety/extinguisher_list.html -->
+{% extends 'base.html' %}
+{% block title %}Огнетушители{% endblock %}
+
+{% block content %}
+<h2>Огнетушители</h2>
+<a href="{% url 'fire_safety:create' %}" class="btn btn-primary">Добавить огнетушитель</a>
+
+<div class="card-list">
+  {% for ext in extinguishers %}
+    <div class="card">
+      <h3>№{{ ext.inventory_number }}</h3>
+      <p><strong>Тип:</strong> {{ ext.get_type_display }}</p>
+      <p><strong>Объект:</strong> <a href="{{ ext.fire_object.get_absolute_url }}">{{ ext.fire_object.name }}</a></p>
+      <p><strong>След. проверка:</strong> {{ ext.next_check_date }}</p>
+      <a href="{% url 'fire_safety:detail' ext.pk %}">Подробнее</a>
+    </div>
+  {% empty %}
+    <p>Нет огнетушителей.</p>
+  {% endfor %}
+</div>
+{% endblock %}

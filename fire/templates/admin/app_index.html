@@ -1,0 +1,44 @@
+<!-- templates/admin/app_index.html -->
+{% extends "admin/index.html" %}
+
+{% block sidebar %}
+<div id="content-related">
+  <h3>Приложения</h3>
+  {% for app in app_list %}
+    <div class="app-{{ app.app_label }} module">
+      <div style="background: linear-gradient(90deg, var(--color-primary-dark), var(--color-primary)); color: white; padding: 12px 16px; border-radius: 8px 8px 0 0; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-folder-open"></i>
+        {{ app.name }}
+      </div>
+      <table>
+        <tbody>
+          {% for model in app.models %}
+            <tr class="model-{{ model.object_name|lower }}">
+              <th scope="row" style="padding: 12px 16px; border-bottom: 1px solid var(--color-border); background: white;">
+                <a href="{{ model.admin_url }}" style="color: var(--color-primary); text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 8px;">
+                  <i class="fas fa-file-alt"></i>
+                  {{ model.name }}
+                </a>
+              </th>
+              <td style="padding: 12px 16px; border-bottom: 1px solid var(--color-border); background: white; display: flex; gap: 8px;">
+                {% if model.add_url %}
+                  <a href="{{ model.add_url }}" style="color: var(--color-accent); text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                    <i class="fas fa-plus"></i>
+                    Добавить
+                  </a>
+                {% endif %}
+                {% if model.admin_url %}
+                  <a href="{{ model.admin_url }}" style="color: var(--color-primary); text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                    <i class="fas fa-pen"></i>
+                    Изменить
+                  </a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

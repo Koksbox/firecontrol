@@ -11,25 +11,27 @@
 <body>
   <div class="app-wrapper">
     <div class="app-layout">
-        <aside class="sidebar">
-          <h2>Пожарный контроль</h2>
-          <nav>
-            <ul>
-              <li><a href="{% url 'dashboard:index' %}" {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %}>Главная</a></li>
-              <li><a href="{% url 'objects:list' %}" {% if 'objects' in request.resolver_match.app_names %}class="active"{% endif %}>Объекты</a></li>
-              <li><a href="{% url 'fire_safety:list' %}" {% if 'fire_safety' in request.resolver_match.app_names %}class="active"{% endif %}>Средства</a></li>
-              <li><a href="{% url 'documents:list' %}" {% if 'documents' in request.resolver_match.app_names %}class="active"{% endif %}>Документы</a></li>
-              <li><a href="{% url 'inspections:list' %}" {% if 'inspections' in request.resolver_match.app_names %}class="active"{% endif %}>Проверки</a></li>
-              {% if user.role == 'admin' %}
-                <li><a href="{% url 'admin:index' %}" target="_blank">Админка</a></li>
-              {% endif %}
-            </ul>
-          </nav>
-          <div class="user-info">
-            <span>{{ user.get_full_name|default:user.username }}</span>
-            <a href="{% url 'logout' %}">Выйти</a>
-          </div>
-        </aside>
+        {% if request.resolver_match.url_name not in 'login register' %}
+  <aside class="sidebar">
+    <h2>Пожарный контроль</h2>
+    <nav>
+      <ul>
+        <li><a href="{% url 'dashboard:index' %}" {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %}>Главная</a></li>
+        <li><a href="{% url 'objects:list' %}" {% if 'objects' in request.resolver_match.app_names %}class="active"{% endif %}>Объекты</a></li>
+        <li><a href="{% url 'fire_safety:list' %}" {% if 'fire_safety' in request.resolver_match.app_names %}class="active"{% endif %}>Средства</a></li>
+        <li><a href="{% url 'documents:list' %}" {% if 'documents' in request.resolver_match.app_names %}class="active"{% endif %}>Документы</a></li>
+        <li><a href="{% url 'inspections:list' %}" {% if 'inspections' in request.resolver_match.app_names %}class="active"{% endif %}>Проверки</a></li>
+        {% if user.role == 'admin' %}
+          <li><a href="{% url 'admin:index' %}" target="_blank">Админка</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    <div class="user-info">
+      <span>{{ user.get_full_name|default:user.username }}</span>
+      <a href="{% url 'logout' %}">Выйти</a>
+    </div>
+  </aside>
+{% endif %}
       <main class="main-content">
         {% block content %}{% endblock %}
       </main>

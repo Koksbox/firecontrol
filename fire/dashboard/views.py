@@ -8,7 +8,7 @@ from fire_safety.models import FireExtinguisher
 from documents.models import ObjectDocument
 from inspections.models import InspectionReport
 
-# @login_required
+@login_required
 def dashboard_view(request):
     user = request.user
     today = timezone.now().date()
